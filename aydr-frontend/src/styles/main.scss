@@ -1,0 +1,22 @@
+@use 'variables' as *;
+
+@use 'layouts/navbar';
+@use 'pages/home';
+@use 'pages/auth/auth';
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: $color-background-light;
+  color: $color-text-main;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}

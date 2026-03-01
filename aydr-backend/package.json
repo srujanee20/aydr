@@ -1,0 +1,25 @@
+{
+  "name": "aydr-backend",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Srujanee Nayak <snayak52006@gmail.com>",
+  "description": "The backend module of AYDR.",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index",
+    "dev:watch": "nodemon index",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.2",
+    "globals": "^17.4.0",
+    "nodemon": "^3.1.14"
+  }
+}

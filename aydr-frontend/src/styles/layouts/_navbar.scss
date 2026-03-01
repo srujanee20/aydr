@@ -1,0 +1,59 @@
+@use '../variables' as *;
+@use 'sass:color';
+
+.navbar {
+  background-color: $color-white;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 1000; // Keeps it above the Leaflet map!
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: $color-background-dark;
+    letter-spacing: -0.05em;
+    
+    span {
+      color: $color-primary;
+    }
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  &__link {
+    font-weight: 500;
+    color: $color-text-main;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__btn {
+    background-color: $color-primary;
+    color: $color-white;
+    padding: 0.5rem 1.25rem;
+    border-radius: $border-radius;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: color.scale($color-primary, $lightness: -10%);
+    }
+  }
+}
