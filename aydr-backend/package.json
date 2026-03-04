@@ -8,12 +8,13 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "node index",
+    "dev": "node index --load=1",
     "dev:watch": "nodemon index",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },
   "dependencies": {
+    "dotenv": "^17.3.1",
     "express": "^5.2.1"
   },
   "devDependencies": {
