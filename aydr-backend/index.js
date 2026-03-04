@@ -1,20 +1,15 @@
+require("./configs/init");
+const path = require("path");
 const express = require("express");
+const apiRouter = require("./routes/apiRouter");
+
+const PORT = process.env.PORT ?? 8000;
 
 const app = express();
 
-const PORT = 8000;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-    res.send("Meow");
-});
-
-app.get("/hello", (req, res) => {
-    let username = req.query.name;
-
-    res.json({
-        title: "Hello World",
-        name: username
-    });
-})
+app.use("/api", apiRouter);
 
 app.listen(PORT, () => console.log(`Server spinned up at port ${PORT}`));
