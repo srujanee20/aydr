@@ -1,5 +1,4 @@
 const dotenv = require("dotenv");
-const { type } = require("node:os");
 const { parseArgs } = require("node:util");
 
 const options = {
