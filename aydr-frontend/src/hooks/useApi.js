@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { apiClient } from "../configs/axiosConfig";
+import apiClient from "../configs/axiosConfig";
 
 const useApi = () => {
     const [data, setData] = useState(null);

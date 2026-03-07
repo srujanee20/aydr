@@ -11,7 +11,7 @@ const options = {
 const { values } = parseArgs({ options });
 const environment = values.environment;
 
-const allowedEnvironments = [ 'local', 'production' ];
+const allowedEnvironments = [ 'local', 'labrotary', 'production' ];
 if (!allowedEnvironments.includes(environment)) {
     console.error("Invalid environment passed!");
     process.exit(1);
