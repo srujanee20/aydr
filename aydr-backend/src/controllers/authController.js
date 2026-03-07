@@ -16,19 +16,25 @@ const registerUser = async (req, res) => {
         }
 
         const userData = { role, name, email, password };
-        if (role === 'PROVIDER')
+        if (role === 'PROVIDER') {
+            if (!serviceCategory && !basePrice) {
+                res.status(400).json(errorResponse("Provider registration failed! Required fields not passed!"));
+                return;
+            }
             userData.providerDetails = { serviceCategory, basePrice: Number(basePrice) };
+        }
 
         const user = await User.create(userData);
 
         res.status(201)
-        .json(successResponse('User registered successfully.', {
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-        }));
+            .json(successResponse('User registered successfully.', {
+                _id: user._id,
+                role: user.role,
+                name: user.name,
+                email: user.email
+            }));
     } catch (err) {
+        console.error(`User registration failed: ${err.message}`);
         res.status(500).json(errorResponse('Something went wrong! Please try again later!'));
     }
 
@@ -59,6 +65,7 @@ const loginUser = async (req, res) => {
         }));
 
     } catch (err) {
+        console.error(`User login failed: ${err.message}`);
         res.status(500).json(errorResponse('Something went wrong! Please try again later!'));
     }
 };

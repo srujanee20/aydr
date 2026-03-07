@@ -15,4 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", apiRouter);
 app.use("/", mvcRouter);
 
-app.listen(PORT, () => console.log(`Server spinned up at port ${PORT}`));
+const server = app.listen(PORT, () => console.log(`Server spinned up at port ${PORT}`));
+
+server.addListener('close', () => console.log('Server is shutting down...'));
