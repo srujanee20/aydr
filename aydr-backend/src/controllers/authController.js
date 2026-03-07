@@ -50,7 +50,7 @@ const loginUser = async (req, res) => {
             return;
         }
 
-        const passwordMatches = user.matchPassword(password);
+        const passwordMatches = await user.matchPassword(password);
         if (!passwordMatches) {
             res.status(401).json(errorResponse('Password does not match!'));
             return;
