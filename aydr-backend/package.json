@@ -8,7 +8,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "node index --load=1",
+    "dev": "node index --environment=local",
     "dev:watch": "nodemon index",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
@@ -17,6 +17,7 @@
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.4"
   },
   "devDependencies": {
