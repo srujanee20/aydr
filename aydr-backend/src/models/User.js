@@ -1,16 +1,45 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const setupProgress = {
+const progressConstraints = {
     status: {
         type: String,
         enum: ['INCOMPLETE', 'PENDING', 'APPROVED', 'REJECTED'],
         default: 'INCOMPLETE'
     },
-    adminMessage: {
-        type: String
-    }
+    adminMessage: String
 };
+
+const providerDetailsSchema = new mongoose.Schema({
+    serviceCategory: String,
+    businessName: String,
+    bio: String,
+    logoUrl: String,
+    baseprice: Number,
+    isAvailable: {
+        type: Boolean,
+        default: false
+    },
+    location: {
+        type: { 
+            type: String, 
+            default: 'Point' 
+        },
+        coordinates: { 
+            type: [Number], 
+            index: '2dsphere' 
+        },
+        address: String
+    },
+    profileSetup: {
+        branding: progressConstraints,
+        location: progressConstraints,
+        pricing: progressConstraints,
+        category: progressConstraints
+    }
+}, { 
+    _id: false 
+});
 
 const userSchema = new mongoose.Schema({
     role: {
@@ -27,49 +56,13 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    passsword: {
+    password: {
         type: String,
         required: true
     },
     providerDetails: {
-        businessName: {
-            type: String
-        },
-        bio: {
-            type: String
-        },
-        logoUrl: {
-            type: String
-        },
-        serviceCategory: {
-            type: String
-        },
-        baseprice: {
-            type: Number
-        },
-        isAvailable: {
-            type: Boolean,
-            default: false
-        },
-        location: {
-            type: {
-                type: String,
-                default: 'Point'
-            },
-            coordinates: {
-                type: [Number],
-                index: '2dsphere'
-            },
-            address: {
-                type: String
-            }
-        },
-        profileSetup: {
-            branding: setupProgress,
-            location: setupProgress,
-            pricing: setupProgress,
-            category: setupProgress
-        }
+        type: providerDetailsSchema,
+        default: undefined
     }
 }, {
     timestamps: true
