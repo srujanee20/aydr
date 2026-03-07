@@ -13,6 +13,11 @@ const setupProgress = {
 };
 
 const userSchema = new mongoose.Schema({
+    role: {
+        type: String,
+        enum: ['CUSTOMER', 'PROVIDER', 'ADMIN'],
+        default: 'CUSTOMER'
+    },
     name: {
         type: String,
         required: true
@@ -25,11 +30,6 @@ const userSchema = new mongoose.Schema({
     passsword: {
         type: String,
         required: true
-    },
-    role: {
-        type: String,
-        enum: ['CUSTOMER', 'PROVIDER', 'ADMIN'],
-        default: 'CUSTOMER'
     },
     providerDetails: {
         businessName: {
@@ -75,8 +75,8 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
-userSchema.methods.matchPassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.passsword);
+userSchema.methods.matchPassword = async function (password) {
+    return await bcrypt.compare(password, this.passsword);
 };
 
 // Hooks
