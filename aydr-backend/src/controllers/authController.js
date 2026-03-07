@@ -4,7 +4,7 @@ const { successResponse, errorResponse } = require("../common/utils/webUtils");
 const { generateAccessToken } = require("../common/utils/jwtUtils");
 
 const registerUser = async (req, res) => {
-    console.log(`Request received to register user with email: ${req.body.email}`)
+    console.log(`Request received to register user with email: ${req.body.email}`);
 
     try {
         const { role, name, email, password, serviceCategory, basePrice } = req.body;
@@ -41,6 +41,8 @@ const registerUser = async (req, res) => {
 }
 
 const loginUser = async (req, res) => {
+    console.log(`Request received to register user with email: ${req.body.email}`);
+
     try {
         const { email, password } = req.body;
 

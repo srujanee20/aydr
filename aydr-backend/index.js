@@ -2,12 +2,15 @@ require("./src/configs/init");
 require("./src/configs/db");
 const path = require("path");
 const express = require("express");
+const cors = require("cors");
 const apiRouter = require("./src/routes/apiRouter");
 const mvcRouter = require("./src/routes/mvcRouter");
 
 const PORT = process.env.PORT ?? 8000;
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

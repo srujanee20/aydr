@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useApi from '../../hooks/useApi';
+import useApi from '../../../hooks/useApi';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [data, error, loading, call] = useApi();
+  // We extract 'error' out of useApi because we are taking manual control of it
+  const [data, error, loading, call] = useApi(); 
+  
   const [isProvider, setIsProvider] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // Local error control
+  
   const [loginData, setLoginData] = useState({
     email: '',
     password: ''
@@ -15,17 +19,26 @@ const Login = () => {
     setLoginData({ ...loginData, [event.target.name]: event.target.value });
   };
 
+  // NEW: A dedicated function to swap forms and wipe stale errors
+  const handleToggle = providerFlag => {
+    setIsProvider(providerFlag);
+    setErrorMessage(''); 
+  };
+
   const handleSubmit = async event => {
     event.preventDefault();
+    setErrorMessage(''); // Clear out any old error on a fresh submit attempt
 
     try {
-      const response = await call('POST', '/api/auth/login', loginData);
+      const response = await call('POST', '/auth/login', loginData);
+      
       const token = response?.data?.data?.accessToken;
+      const expiresIn = response?.data?.data?.expiresIn;
 
       if (token) {
         localStorage.setItem('accessToken', token);
+        localStorage.setItem('expiresIn', expireIn);
 
-        // Decode token natively to extract the role and redirect
         const payloadBase64 = token.split('.')[1];
         const decodedPayload = JSON.parse(atob(payloadBase64));
         const userRole = decodedPayload.scp;
@@ -38,7 +51,9 @@ const Login = () => {
       }
 
     } catch (err) {
-      console.error('Login failed', err);
+      // Safely dig into the Axios error object, with a fallback for dead servers
+      const errorText = err.response?.data?.message || err.response?.data?.detail || 'Network error. Please try again.';
+      setErrorMessage(errorText);
     }
   };
 
@@ -50,10 +65,10 @@ const Login = () => {
         <div className="form-container provider-container">
           <form className="auth-form" onSubmit={handleSubmit}>
             <h2>Provider Login</h2>
-            {/* error is now response.data, so we read .message or .detail directly */}
-            {error && isProvider && (
+            
+            {errorMessage && isProvider && (
               <p className="error-text" style={{ color: 'red', fontSize: '0.9rem' }}>
-                {error?.message || error?.detail || 'Login failed'}
+                {errorMessage}
               </p>
             )}
 
@@ -71,9 +86,10 @@ const Login = () => {
         <div className="form-container customer-container">
           <form className="auth-form" onSubmit={handleSubmit}>
             <h2>Customer Login</h2>
-            {error && !isProvider && (
+            
+            {errorMessage && !isProvider && (
               <p className="error-text" style={{ color: 'red', fontSize: '0.9rem' }}>
-                {error?.message || error?.detail || 'Login failed'}
+                {errorMessage}
               </p>
             )}
 
@@ -93,14 +109,14 @@ const Login = () => {
             <div className="overlay-panel overlay-left">
               <h2>Provider Portal</h2>
               <p>Log in to manage your jobs, update your availability, and get to work.</p>
-              <button type="button" className="ghost-btn" onClick={() => setIsProvider(true)}>
+              <button type="button" className="ghost-btn" onClick={() => handleToggle(true)}>
                 Provider Login
               </button>
             </div>
             <div className="overlay-panel overlay-right">
               <h2>Customer Portal</h2>
               <p>Log in to request services and track your ongoing jobs.</p>
-              <button type="button" className="ghost-btn" onClick={() => setIsProvider(false)}>
+              <button type="button" className="ghost-btn" onClick={() => handleToggle(false)}>
                 Customer Login
               </button>
             </div>

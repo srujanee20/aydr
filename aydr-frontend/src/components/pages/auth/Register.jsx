@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useApi from '../../hooks/useApi';
+import useApi from '../../../hooks/useApi';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [data, error, loading, call] = useApi();
+  const [data, error, loading, call] = useApi(); // Removed global error
+  
   const [isProvider, setIsProvider] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // Local error control
 
   const [formData, setFormData] = useState({
     name: '',
@@ -19,22 +21,27 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Wipes the error clean when switching sides
+  const handleToggle = (isProv) => {
+    setIsProvider(isProv);
+    setErrorMessage('');
+  };
+
   const handleSubmit = async (e, role) => {
     e.preventDefault();
+    setErrorMessage(''); 
     
-    // Attach the correct role to the payload
     const payload = { ...formData, role };
 
     try {
-      const response = await call('POST', '/api/auth/register', payload);
+      const response = await call('POST', '/auth/register', payload);
       
-      // Axios throws errors automatically, so if we reach this line, it was a success.
       if (response) {
-        // Redirect to login page upon successful registration
         navigate('/login');
       }
     } catch (err) {
-      console.error('Registration failed', err);
+      const errorText = err.response?.data?.message || err.response?.data?.detail || 'Network error. Please try again.';
+      setErrorMessage(errorText);
     }
   };
 
@@ -47,9 +54,9 @@ const Register = () => {
           <form className="auth-form" onSubmit={(e) => handleSubmit(e, 'PROVIDER')}>
             <h2>Become a Provider</h2>
             
-            {error && isProvider && (
+            {errorMessage && isProvider && (
               <p className="error-text" style={{ color: 'red', fontSize: '0.9rem' }}>
-                {error?.message || error?.detail || 'Registration failed'}
+                {errorMessage}
               </p>
             )}
 
@@ -72,9 +79,9 @@ const Register = () => {
           <form className="auth-form" onSubmit={(e) => handleSubmit(e, 'CUSTOMER')}>
             <h2>Join as a Customer</h2>
 
-            {error && !isProvider && (
+            {errorMessage && !isProvider && (
               <p className="error-text" style={{ color: 'red', fontSize: '0.9rem' }}>
-                {error?.message || error?.detail || 'Registration failed'}
+                {errorMessage}
               </p>
             )}
 
@@ -96,7 +103,7 @@ const Register = () => {
             <div className="overlay-panel overlay-left">
               <h2>Are you a Provider?</h2>
               <p>Join our platform to offer your services and grow your business.</p>
-              <button type="button" className="ghost-btn" onClick={() => setIsProvider(true)}>
+              <button type="button" className="ghost-btn" onClick={() => handleToggle(true)}>
                 Sign Up as Provider
               </button>
             </div>
@@ -104,7 +111,7 @@ const Register = () => {
             <div className="overlay-panel overlay-right">
               <h2>Looking for Services?</h2>
               <p>Sign up as a customer to find trusted providers near you.</p>
-              <button type="button" className="ghost-btn" onClick={() => setIsProvider(false)}>
+              <button type="button" className="ghost-btn" onClick={() => handleToggle(false)}>
                 Sign Up as Customer
               </button>
             </div>
