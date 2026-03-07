@@ -1,14 +1,12 @@
-const { useCallback } = require("react");
-const { useState } = require("react");
-const { default: apiClient } = require("../configs/axiosConfig");
+import { useCallback, useState } from "react";
+import { apiClient } from "../configs/axiosConfig";
 
 const useApi = () => {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const execute = useCallback(
-        async (method, url, body = null, headers = {}) => {
+    const call = useCallback(async (method, url, body = null, headers = {}) => {
             setLoading(true);
 
             setData(null);
@@ -22,11 +20,11 @@ const useApi = () => {
                     headers: { ...apiClient.defaults.headers, ...headers }
                 });
 
-                setData(response);
+                setData(response.data);
                 return response;
             } catch (err) {
                 const response = err.response ?? null;
-                setError(response)
+                setError(response.data)
                 throw err;
             } finally {
                 setLoading(false);
@@ -35,7 +33,7 @@ const useApi = () => {
         []
     );
 
-    return [data, error, loading, execute];
+    return [data, error, loading, call];
 };
 
 export default useApi;
