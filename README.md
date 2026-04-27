@@ -1,14 +1,17 @@
+<p align="center">
+  <img src="aydr-ui/public/images/logo.ico" alt="Aydr Logo" width="80" />
+</p>
 
 # Aydr — Expert Help, Right Around the Corner
 
 A full-stack local services marketplace that connects customers with trusted service providers in their area.
 Built with **React**, **Express**, **MongoDB**, and **Leaflet** maps.
 
-[Live Demo](#live-demo) • [Features](#features) • [Tech Stack](#tech-stack) • [Getting Started](#getting-started) • [Project Structure](#project-structure) • [API Reference](#api-reference) • [License](#license)
+[Live Demo](#-live-demo) • [Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Project Structure](#-project-structure) • [API Reference](#-api-reference) • [License](#-license)
 
 ---
 
-## Live Demo
+## 🌐 Live Demo
 
 | Module   | URL                              |
 | -------- | -------------------------------- |
@@ -20,7 +23,7 @@ Built with **React**, **Express**, **MongoDB**, and **Leaflet** maps.
 
 ---
 
-## About
+## 📖 About
 
 **Aydr** is a location-aware services booking platform where customers can discover nearby service providers on an interactive map, browse their offered services, and place bookings — all in real time. Providers get their own dashboard to manage services, bookings, and business profiles, while an admin portal handles provider verification and platform moderation.
 
@@ -31,28 +34,28 @@ The project follows a **monorepo** structure with two independent modules:
 
 ---
 
-## Features
+## ✨ Features
 
-### Authentication & Authorization
+### 🔐 Authentication & Authorization
 - JWT-based stateless authentication for the REST API (Passport.js + `passport-jwt`).
 - Scope-based authorization (`scp` claim) for fine-grained endpoint access control.
 - Session-based authentication for the server-rendered Admin Portal.
 - Role-based access: **Customer**, **Provider**, and **Admin**.
 - Protected routes on the frontend with role-specific route guards.
 
-### Location-Aware Discovery
+### 🗺️ Location-Aware Discovery
 - Interactive Leaflet map on the Home page and Customer Dashboard.
 - Providers are plotted as map markers with popup previews (name, category, rating).
 - Area search with geocoding fallback via the Nominatim API.
 - Browser Geolocation API integration for providers setting their business location.
 
-### Customer Experience
+### 👤 Customer Experience
 - **Explore tab** — browse providers on a map + filterable list, with category filters.
 - **Provider Detail page** — full provider profile with services grid and inline booking modal.
 - **My Bookings tab** — view, track, and cancel bookings with status lifecycle (`REQUESTED → ACCEPTED → IN_PROGRESS → COMPLETED`).
 - **Customer Profile** — update personal information and profile picture.
 
-### Provider Experience
+### 🛠️ Provider Experience
 - **Provider Dashboard** — booking stats (total, pending, active, completed) with quick-action cards.
 - **Provider Settings** — comprehensive multi-section settings page:
   - Personal account profile (name, phone, avatar upload).
@@ -62,19 +65,19 @@ The project follows a **monorepo** structure with two independent modules:
 - **Booking Management** — accept, reject, mark in-progress, or complete incoming bookings.
 - **Setup Progress Bars** — visual indicators for branding, location, pricing, and category setup status.
 
-### Admin Portal (Server-Rendered)
+### 🏢 Admin Portal (Server-Rendered)
 - Session-protected EJS admin dashboard.
 - **Provider Verification** — approve or reject provider applications with admin messages.
 - **Category Management** — create, rename, and toggle categories.
 - **Review Moderation** — view and delete inappropriate reviews.
 - Dashboard overview with pending-provider and total-booking stats.
 
-### File Uploads
+### 📸 File Uploads
 - Image uploads via **ImageKit** CDN (base64-encoded, with file-type inference).
 - Multer middleware for multipart form handling.
 - Avatar uploads for user profiles and banner/logo uploads for provider branding.
 
-### Security & Performance
+### 🔒 Security & Performance
 - **Helmet** — secure HTTP headers.
 - **express-rate-limit** — API rate limiting (1000 requests / 15 min per IP).
 - **express-mongo-sanitize** — NoSQL injection prevention.
@@ -83,14 +86,14 @@ The project follows a **monorepo** structure with two independent modules:
 - **bcryptjs** — password hashing with salt rounds.
 - Centralized error handler (Mongoose duplicate key, validation errors, unauthorized access).
 
-### Reviews & Ratings
+### ⭐ Reviews & Ratings
 - Customers can review completed bookings (1–5 star rating + comment).
 - Provider average rating auto-computed via Mongoose `post('save')` aggregation hook.
 - One review per booking enforced at the schema level.
 
 ---
 
-## Tech Stack
+## 🛠 Tech Stack
 
 ### Frontend (`aydr-ui`)
 
@@ -120,7 +123,7 @@ The project follows a **monorepo** structure with two independent modules:
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -142,42 +145,48 @@ cd aydr-api
 npm install
 ```
 
-Create a `.env.local` file (or copy from the example):
+The backend uses a layered environment config. It loads `.env` first, then overlays `.env.<env>` based on the `--env` flag (defaults to `local`). You can create as many environment files as you need:
+
+```
+.env            ← base (shared across all environments)
+.env.local      ← local development overrides
+.env.staging    ← staging overrides
+.env.production ← production overrides
+```
+
+Copy the example to get started:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Fill in the required values:
+See `.env.example` for all available variables. The key ones are:
 
 ```env
 PORT=8000
 NODE_ENV=local
 
-# MongoDB connection string
 MONGO_URI=mongodb://127.0.0.1:27017/aydr
 
-# JWT Configuration
 JWT_SECRET=<your-strong-random-secret>
 JWT_EXPIRES_IN=24h
 JWT_ISSUER=aydr-api
 JWT_AUDIENCE=aydr-client
 
-# Session secret for Admin Portal
 SESSION_SECRET=<your-session-secret>
 
-# ImageKit credentials
 IMAGEKIT_PUBLIC_KEY=<your-imagekit-public-key>
 IMAGEKIT_PRIVATE_KEY=<your-imagekit-private-key>
 IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/<your-endpoint>
 ```
 
-Start the development server:
+Start the server with the desired environment:
 
 ```bash
-npm run dev          # Loads .env + .env.local
-# or
-npm run dev:watch    # With auto-restart via nodemon
+npm run dev              # --env=local (default)
+npm run dev:lcl          # explicit --env=local
+node index --env=staging # any custom environment
+npm run dev:watch        # local + auto-restart via nodemon
 ```
 
 The API will be available at `http://localhost:8000`.
@@ -211,7 +220,7 @@ The frontend will be available at `http://localhost:3000`.
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 aydr/
@@ -259,7 +268,7 @@ aydr/
 
 ---
 
-## API Reference
+## 📡 API Reference
 
 All API endpoints are prefixed with `/api`. Authentication is done via `Authorization: Bearer <token>` header.
 
@@ -267,62 +276,62 @@ All API endpoints are prefixed with `/api`. Authentication is done via `Authoriz
 
 | Method | Endpoint          | Description               | Auth |
 | ------ | ----------------- | ------------------------- | ---- |
-| POST   | `/api/auth/register` | Register a new user    | No   |
-| POST   | `/api/auth/login`    | Login and receive JWT  | No   |
+| POST   | `/api/auth/register` | Register a new user    | ❌   |
+| POST   | `/api/auth/login`    | Login and receive JWT  | ❌   |
 
 ### Users
 
 | Method | Endpoint            | Description                  | Auth |
 | ------ | ------------------- | ---------------------------- | ---- |
-| GET    | `/api/users/me`     | Get current user profile     | Yes  |
-| PUT    | `/api/users/:id`    | Update user profile          | Yes  |
+| GET    | `/api/users/me`     | Get current user profile     | ✅   |
+| PUT    | `/api/users/:id`    | Update user profile          | ✅   |
 
 ### Providers
 
 | Method | Endpoint              | Description                       | Auth |
 | ------ | --------------------- | --------------------------------- | ---- |
-| GET    | `/api/providers`      | List all providers (search/filter)| No   |
-| GET    | `/api/providers/:id`  | Get provider details              | No   |
-| PUT    | `/api/providers/:id`  | Update provider profile           | Yes  |
+| GET    | `/api/providers`      | List all providers (search/filter)| ❌   |
+| GET    | `/api/providers/:id`  | Get provider details              | ❌   |
+| PUT    | `/api/providers/:id`  | Update provider profile           | ✅   |
 
 ### Services
 
 | Method | Endpoint                       | Description                   | Auth |
 | ------ | ------------------------------ | ----------------------------- | ---- |
-| GET    | `/api/services/provider/:id`   | List services by provider     | No   |
-| POST   | `/api/services`                | Create a new service          | Yes  |
-| PUT    | `/api/services/:id`            | Update a service              | Yes  |
+| GET    | `/api/services/provider/:id`   | List services by provider     | ❌   |
+| POST   | `/api/services`                | Create a new service          | ✅   |
+| PUT    | `/api/services/:id`            | Update a service              | ✅   |
 
 ### Bookings
 
 | Method | Endpoint                       | Description                      | Auth |
 | ------ | ------------------------------ | -------------------------------- | ---- |
-| GET    | `/api/bookings/my`             | Get current user's bookings      | Yes  |
-| POST   | `/api/bookings`                | Create a new booking             | Yes  |
-| PATCH  | `/api/bookings/:id/status`     | Update booking status            | Yes  |
+| GET    | `/api/bookings/my`             | Get current user's bookings      | ✅   |
+| POST   | `/api/bookings`                | Create a new booking             | ✅   |
+| PATCH  | `/api/bookings/:id/status`     | Update booking status            | ✅   |
 
 ### Reviews
 
 | Method | Endpoint          | Description            | Auth |
 | ------ | ----------------- | ---------------------- | ---- |
-| POST   | `/api/reviews`    | Submit a review        | Yes  |
-| GET    | `/api/reviews`    | List reviews           | No   |
+| POST   | `/api/reviews`    | Submit a review        | ✅   |
+| GET    | `/api/reviews`    | List reviews           | ❌   |
 
 ### Categories
 
 | Method | Endpoint            | Description          | Auth |
 | ------ | ------------------- | -------------------- | ---- |
-| GET    | `/api/categories`   | List all categories  | No   |
+| GET    | `/api/categories`   | List all categories  | ❌   |
 
 ### Uploads
 
 | Method | Endpoint               | Description             | Auth |
 | ------ | ---------------------- | ----------------------- | ---- |
-| POST   | `/api/uploads/single`  | Upload a single image   | Yes  |
+| POST   | `/api/uploads/single`  | Upload a single image   | ✅   |
 
 ---
 
-## Available Scripts
+## 🧪 Available Scripts
 
 ### Backend (`aydr-api`)
 
@@ -344,7 +353,7 @@ All API endpoints are prefixed with `/api`. Authentication is done via `Authoriz
 
 ---
 
-## Deployment
+## 🚢 Deployment
 
 <!-- TODO: Add deployment details -->
 
@@ -358,10 +367,10 @@ All API endpoints are prefixed with `/api`. Authentication is done via `Authoriz
 
 ---
 
-## License
+## 📄 License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
-Made by [Srujanee Nayak](https://github.com/srujanee20)
+<p align="center">Made with ❤️ by <a href="https://github.com/srujanee20">Srujanee Nayak</a></p>
