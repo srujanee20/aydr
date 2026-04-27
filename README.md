@@ -1,15 +1,14 @@
-![Aydr Logo](aydr-ui/public/images/logo.ico)
 
 # Aydr — Expert Help, Right Around the Corner
 
 A full-stack local services marketplace that connects customers with trusted service providers in their area.
 Built with **React**, **Express**, **MongoDB**, and **Leaflet** maps.
 
-[Live Demo](#-live-demo) • [Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Project Structure](#-project-structure) • [API Reference](#-api-reference) • [License](#-license)
+[Live Demo](#live-demo) • [Features](#features) • [Tech Stack](#tech-stack) • [Getting Started](#getting-started) • [Project Structure](#project-structure) • [API Reference](#api-reference) • [License](#license)
 
 ---
 
-## 🌐 Live Demo
+## Live Demo
 
 | Module   | URL                              |
 | -------- | -------------------------------- |
@@ -21,7 +20,7 @@ Built with **React**, **Express**, **MongoDB**, and **Leaflet** maps.
 
 ---
 
-## 📖 About
+## About
 
 **Aydr** is a location-aware services booking platform where customers can discover nearby service providers on an interactive map, browse their offered services, and place bookings — all in real time. Providers get their own dashboard to manage services, bookings, and business profiles, while an admin portal handles provider verification and platform moderation.
 
@@ -32,28 +31,28 @@ The project follows a **monorepo** structure with two independent modules:
 
 ---
 
-## ✨ Features
+## Features
 
-### 🔐 Authentication & Authorization
+### Authentication & Authorization
 - JWT-based stateless authentication for the REST API (Passport.js + `passport-jwt`).
 - Scope-based authorization (`scp` claim) for fine-grained endpoint access control.
 - Session-based authentication for the server-rendered Admin Portal.
 - Role-based access: **Customer**, **Provider**, and **Admin**.
 - Protected routes on the frontend with role-specific route guards.
 
-### 🗺️ Location-Aware Discovery
+### Location-Aware Discovery
 - Interactive Leaflet map on the Home page and Customer Dashboard.
 - Providers are plotted as map markers with popup previews (name, category, rating).
 - Area search with geocoding fallback via the Nominatim API.
 - Browser Geolocation API integration for providers setting their business location.
 
-### 👤 Customer Experience
+### Customer Experience
 - **Explore tab** — browse providers on a map + filterable list, with category filters.
 - **Provider Detail page** — full provider profile with services grid and inline booking modal.
 - **My Bookings tab** — view, track, and cancel bookings with status lifecycle (`REQUESTED → ACCEPTED → IN_PROGRESS → COMPLETED`).
 - **Customer Profile** — update personal information and profile picture.
 
-### 🛠️ Provider Experience
+### Provider Experience
 - **Provider Dashboard** — booking stats (total, pending, active, completed) with quick-action cards.
 - **Provider Settings** — comprehensive multi-section settings page:
   - Personal account profile (name, phone, avatar upload).
@@ -63,19 +62,19 @@ The project follows a **monorepo** structure with two independent modules:
 - **Booking Management** — accept, reject, mark in-progress, or complete incoming bookings.
 - **Setup Progress Bars** — visual indicators for branding, location, pricing, and category setup status.
 
-### 🏢 Admin Portal (Server-Rendered)
+### Admin Portal (Server-Rendered)
 - Session-protected EJS admin dashboard.
 - **Provider Verification** — approve or reject provider applications with admin messages.
 - **Category Management** — create, rename, and toggle categories.
 - **Review Moderation** — view and delete inappropriate reviews.
 - Dashboard overview with pending-provider and total-booking stats.
 
-### 📸 File Uploads
+### File Uploads
 - Image uploads via **ImageKit** CDN (base64-encoded, with file-type inference).
 - Multer middleware for multipart form handling.
 - Avatar uploads for user profiles and banner/logo uploads for provider branding.
 
-### 🔒 Security & Performance
+### Security & Performance
 - **Helmet** — secure HTTP headers.
 - **express-rate-limit** — API rate limiting (1000 requests / 15 min per IP).
 - **express-mongo-sanitize** — NoSQL injection prevention.
@@ -84,14 +83,14 @@ The project follows a **monorepo** structure with two independent modules:
 - **bcryptjs** — password hashing with salt rounds.
 - Centralized error handler (Mongoose duplicate key, validation errors, unauthorized access).
 
-### ⭐ Reviews & Ratings
+### Reviews & Ratings
 - Customers can review completed bookings (1–5 star rating + comment).
 - Provider average rating auto-computed via Mongoose `post('save')` aggregation hook.
 - One review per booking enforced at the schema level.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend (`aydr-ui`)
 
@@ -121,7 +120,7 @@ The project follows a **monorepo** structure with two independent modules:
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -212,7 +211,7 @@ The frontend will be available at `http://localhost:3000`.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 aydr/
@@ -260,7 +259,7 @@ aydr/
 
 ---
 
-## 📡 API Reference
+## API Reference
 
 All API endpoints are prefixed with `/api`. Authentication is done via `Authorization: Bearer <token>` header.
 
@@ -268,62 +267,62 @@ All API endpoints are prefixed with `/api`. Authentication is done via `Authoriz
 
 | Method | Endpoint          | Description               | Auth |
 | ------ | ----------------- | ------------------------- | ---- |
-| POST   | `/api/auth/register` | Register a new user    | ❌   |
-| POST   | `/api/auth/login`    | Login and receive JWT  | ❌   |
+| POST   | `/api/auth/register` | Register a new user    | No   |
+| POST   | `/api/auth/login`    | Login and receive JWT  | No   |
 
 ### Users
 
 | Method | Endpoint            | Description                  | Auth |
 | ------ | ------------------- | ---------------------------- | ---- |
-| GET    | `/api/users/me`     | Get current user profile     | ✅   |
-| PUT    | `/api/users/:id`    | Update user profile          | ✅   |
+| GET    | `/api/users/me`     | Get current user profile     | Yes  |
+| PUT    | `/api/users/:id`    | Update user profile          | Yes  |
 
 ### Providers
 
 | Method | Endpoint              | Description                       | Auth |
 | ------ | --------------------- | --------------------------------- | ---- |
-| GET    | `/api/providers`      | List all providers (search/filter)| ❌   |
-| GET    | `/api/providers/:id`  | Get provider details              | ❌   |
-| PUT    | `/api/providers/:id`  | Update provider profile           | ✅   |
+| GET    | `/api/providers`      | List all providers (search/filter)| No   |
+| GET    | `/api/providers/:id`  | Get provider details              | No   |
+| PUT    | `/api/providers/:id`  | Update provider profile           | Yes  |
 
 ### Services
 
 | Method | Endpoint                       | Description                   | Auth |
 | ------ | ------------------------------ | ----------------------------- | ---- |
-| GET    | `/api/services/provider/:id`   | List services by provider     | ❌   |
-| POST   | `/api/services`                | Create a new service          | ✅   |
-| PUT    | `/api/services/:id`            | Update a service              | ✅   |
+| GET    | `/api/services/provider/:id`   | List services by provider     | No   |
+| POST   | `/api/services`                | Create a new service          | Yes  |
+| PUT    | `/api/services/:id`            | Update a service              | Yes  |
 
 ### Bookings
 
 | Method | Endpoint                       | Description                      | Auth |
 | ------ | ------------------------------ | -------------------------------- | ---- |
-| GET    | `/api/bookings/my`             | Get current user's bookings      | ✅   |
-| POST   | `/api/bookings`                | Create a new booking             | ✅   |
-| PATCH  | `/api/bookings/:id/status`     | Update booking status            | ✅   |
+| GET    | `/api/bookings/my`             | Get current user's bookings      | Yes  |
+| POST   | `/api/bookings`                | Create a new booking             | Yes  |
+| PATCH  | `/api/bookings/:id/status`     | Update booking status            | Yes  |
 
 ### Reviews
 
 | Method | Endpoint          | Description            | Auth |
 | ------ | ----------------- | ---------------------- | ---- |
-| POST   | `/api/reviews`    | Submit a review        | ✅   |
-| GET    | `/api/reviews`    | List reviews           | ❌   |
+| POST   | `/api/reviews`    | Submit a review        | Yes  |
+| GET    | `/api/reviews`    | List reviews           | No   |
 
 ### Categories
 
 | Method | Endpoint            | Description          | Auth |
 | ------ | ------------------- | -------------------- | ---- |
-| GET    | `/api/categories`   | List all categories  | ❌   |
+| GET    | `/api/categories`   | List all categories  | No   |
 
 ### Uploads
 
 | Method | Endpoint               | Description             | Auth |
 | ------ | ---------------------- | ----------------------- | ---- |
-| POST   | `/api/uploads/single`  | Upload a single image   | ✅   |
+| POST   | `/api/uploads/single`  | Upload a single image   | Yes  |
 
 ---
 
-## 🧪 Available Scripts
+## Available Scripts
 
 ### Backend (`aydr-api`)
 
@@ -345,7 +344,7 @@ All API endpoints are prefixed with `/api`. Authentication is done via `Authoriz
 
 ---
 
-## 🚢 Deployment
+## Deployment
 
 <!-- TODO: Add deployment details -->
 
@@ -359,10 +358,10 @@ All API endpoints are prefixed with `/api`. Authentication is done via `Authoriz
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
-Made with ❤️ by [Srujanee Nayak](https://github.com/srujanee20)
+Made by [Srujanee Nayak](https://github.com/srujanee20)
