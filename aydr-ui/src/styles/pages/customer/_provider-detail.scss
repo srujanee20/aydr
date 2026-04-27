@@ -1,0 +1,158 @@
+@use '../../variables' as *;
+@use '../../mixins' as *;
+@use 'sass:color';
+
+.provider-detail {
+  min-height: calc(100vh - $navbar-height);
+
+  &__hero {
+    background: linear-gradient(135deg, $color-background-dark, color.adjust($color-background-dark, $lightness: 8%));
+    color: $color-white;
+    padding: 3rem 2rem;
+  }
+
+  &__hero-inner {
+    max-width: $max-width;
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  &__logo {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: $border-radius;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+    background-color: $color-white;
+  }
+
+  &__info {
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  &__category {
+    @include badge(rgba(255, 255, 255, 0.15));
+  }
+
+  &__rating {
+    font-size: 0.9rem;
+    small { opacity: 0.7; }
+  }
+
+  &__bio {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    max-width: 600px;
+  }
+
+  &__contact {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+
+  // ─── Services Grid ───
+  &__services {
+    @include page-container;
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $color-background-dark;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  &__empty {
+    color: $color-text-muted;
+    font-size: 0.9rem;
+    padding: 2rem;
+    text-align: center;
+  }
+}
+
+// ─── Booking Form (inside modal) ───
+.booking-form {
+  @include flex-column;
+  gap: 1.25rem;
+
+  &__error {
+    background-color: rgba($color-danger, 0.08);
+    color: $color-danger;
+    padding: 0.6rem 1rem;
+    border-radius: $border-radius;
+    font-size: 0.85rem;
+    border-left: 3px solid $color-danger;
+  }
+
+  &__price {
+    @include flex-between;
+    padding: 0.75rem 1rem;
+    background-color: $color-surface;
+    border-radius: $border-radius;
+
+    span { color: $color-text-muted; font-size: 0.9rem; }
+    strong { font-size: 1.25rem; color: $color-primary; }
+  }
+
+  label {
+    @include flex-column;
+    gap: 0.35rem;
+
+    span {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: $color-text-main;
+    }
+
+    input, textarea {
+      @include input-base;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+  }
+
+  &__submit {
+    @include btn-primary;
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.booking-success {
+  @include flex-center;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 2rem;
+  text-align: center;
+
+  &__icon { font-size: 3rem; }
+  p { color: $color-text-muted; }
+}

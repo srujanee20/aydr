@@ -1,0 +1,102 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.service-card {
+  @include card(0);
+  overflow: hidden;
+  transition: all $transition-base;
+  @include card-hover;
+
+  &__image {
+    height: 180px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform $transition-slow;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+
+  &__body {
+    padding: 1.25rem;
+  }
+
+  &__header {
+    @include flex-between;
+    margin-bottom: 0.5rem;
+  }
+
+  &__name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: $color-background-dark;
+  }
+
+  &__price {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: $color-primary;
+    white-space: nowrap;
+  }
+
+  &__desc {
+    @include truncate(2);
+    font-size: 0.875rem;
+    color: $color-text-muted;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__duration {
+    font-size: 0.8rem;
+    color: $color-text-muted;
+  }
+
+  &__category {
+    @include badge(rgba($color-primary, 0.1), $color-primary);
+    font-size: 0.7rem;
+  }
+
+  &__provider {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid $color-border-light;
+    cursor: pointer;
+    transition: color $transition-fast;
+
+    img {
+      @include avatar(28px);
+    }
+
+    span {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: $color-text-muted;
+    }
+
+    &:hover span {
+      color: $color-primary;
+    }
+  }
+
+  &__book-btn {
+    @include btn-primary;
+    width: 100%;
+    margin-top: 1rem;
+  }
+}

@@ -1,0 +1,85 @@
+<%- include('../partials/header', { script: '/js/providers.js' }) %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="page-title mb-0">Provider Moderation</h2>
+        <p class="text-muted mb-0" style="font-size:0.85rem">Approve, reject, or re-evaluate providers</p>
+    </div>
+    <select class="form-select w-auto shadow-sm" style="border-radius:8px" onchange="window.location.href='/admin/providers?status=' + this.value">
+        <option value="ALL" <%= currentStatus === 'ALL' ? 'selected' : '' %>>All Providers</option>
+        <option value="PENDING" <%= currentStatus === 'PENDING' ? 'selected' : '' %>>Pending Approval</option>
+        <option value="APPROVED" <%= currentStatus === 'APPROVED' ? 'selected' : '' %>>Approved</option>
+        <option value="REJECTED" <%= currentStatus === 'REJECTED' ? 'selected' : '' %>>Rejected</option>
+    </select>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th class="ps-4">Provider Name</th>
+                    <th>Email</th>
+                    <th>Category</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th class="text-end pe-4">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (providers.length === 0) { %>
+                <tr>
+                    <td colspan="6" class="text-center text-muted py-5">
+                        <i class="fas fa-inbox mb-2" style="font-size:1.5rem;display:block;opacity:0.4"></i>
+                        No providers found.
+                    </td>
+                </tr>
+                <% } %>
+                <% providers.forEach(p => { %>
+                <tr id="row-<%= p._id %>" class="align-middle">
+                    <td class="ps-4 fw-bold"><%= p.name %></td>
+                    <td class="text-muted"><%= p.email %></td>
+                    <td><span class="badge" style="background:rgba(37,99,235,0.1);color:#2563eb"><%= p.category ? p.category.name : 'N/A' %></span></td>
+                    <td>
+                        <% if (p.location && p.location.coordinates && p.location.coordinates.length === 2) { %>
+                            <div class="d-flex flex-column gap-1">
+                                <span class="text-truncate" style="max-width: 150px; font-size: 0.8rem;" title="<%= p.location.address %>"><%= p.location.address %></span>
+                                <a href="https://www.openstreetmap.org/?mlat=<%= p.location.coordinates[1] %>&mlon=<%= p.location.coordinates[0] %>#map=15/<%= p.location.coordinates[1] %>/<%= p.location.coordinates[0] %>" target="_blank" class="text-decoration-none" style="font-size: 0.75rem;">
+                                    <i class="fas fa-map-marker-alt me-1 text-danger"></i>View Map
+                                </a>
+                            </div>
+                        <% } else { %>
+                            <span class="text-muted" style="font-size: 0.8rem;">No Location</span>
+                        <% } %>
+                    </td>
+                    <td>
+                        <% if (p.verification.status === 'APPROVED') { %>
+                            <span class="badge" style="background:rgba(16,185,129,0.1);color:#10b981"><i class="fas fa-check me-1"></i>Approved</span>
+                        <% } else if (p.verification.status === 'PENDING') { %>
+                            <span class="badge" style="background:rgba(245,158,11,0.1);color:#f59e0b"><i class="fas fa-hourglass-half me-1"></i>Pending</span>
+                        <% } else { %>
+                            <span class="badge" style="background:rgba(239,68,68,0.1);color:#ef4444"><i class="fas fa-times me-1"></i>Rejected</span>
+                        <% } %>
+                    </td>
+                    <td class="text-end pe-4">
+                        <% if(p.verification.status === 'PENDING') { %>
+                            <button class="btn btn-sm btn-success action-btn me-1" style="border-radius:6px" data-id="<%= p._id %>" data-status="APPROVED">
+                                <i class="fas fa-check me-1"></i>Approve
+                            </button>
+                            <button class="btn btn-sm btn-danger action-btn" style="border-radius:6px" data-id="<%= p._id %>" data-status="REJECTED">
+                                <i class="fas fa-times me-1"></i>Reject
+                            </button>
+                        <% } else { %>
+                            <button class="btn btn-sm btn-outline-secondary action-btn" style="border-radius:6px" data-id="<%= p._id %>" data-status="PENDING">
+                                <i class="fas fa-redo me-1"></i>Re-Evaluate
+                            </button>
+                        <% } %>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

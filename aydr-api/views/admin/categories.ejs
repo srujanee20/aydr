@@ -1,0 +1,113 @@
+<%- include('../partials/header', { script: '/js/categories.js' }) %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="page-title mb-0">Service Categories</h2>
+        <p class="text-muted mb-0" style="font-size:0.85rem">Manage categories available for providers</p>
+    </div>
+    <button class="btn btn-primary shadow-sm" style="border-radius:8px" data-bs-toggle="modal" data-bs-target="#addModal">
+        <i class="fas fa-plus me-1"></i> Add Category
+    </button>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th class="ps-4">Category Name</th>
+                    <th>Status</th>
+                    <th class="text-end pe-4">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (categories.length === 0) { %>
+                <tr>
+                    <td colspan="3" class="text-center text-muted py-5">
+                        <i class="fas fa-tags mb-2" style="font-size:1.5rem;display:block;opacity:0.4"></i>
+                        No categories yet. Add your first one!
+                    </td>
+                </tr>
+                <% } %>
+                <% categories.forEach(c => { %>
+                <tr class="align-middle">
+                    <td class="ps-4 fw-bold category-name" id="name-<%= c._id %>"><%= c.name %></td>
+                    <td>
+                        <% if (c.status === 'PENDING') { %>
+                            <span class="badge" style="background:rgba(245,158,11,0.1);color:#f59e0b">Pending Approval</span>
+                        <% } else if (c.status === 'REJECTED') { %>
+                            <span class="badge" style="background:rgba(239,68,68,0.1);color:#ef4444">Rejected</span>
+                        <% } else if (c.isActive) { %>
+                            <span class="badge" style="background:rgba(16,185,129,0.1);color:#10b981">Active</span>
+                        <% } else { %>
+                            <span class="badge" style="background:rgba(148,163,184,0.15);color:#64748b">Inactive</span>
+                        <% } %>
+                    </td>
+                    <td class="text-end pe-4">
+                        <button class="btn btn-sm btn-outline-primary rename-btn me-1" style="border-radius:6px" data-id="<%= c._id %>" data-name="<%= c.name %>">
+                            <i class="fas fa-edit"></i> Rename
+                        </button>
+                        <button class="btn btn-sm btn-outline-<%= c.isActive ? 'warning' : 'success' %> toggle-btn" style="border-radius:6px" data-id="<%= c._id %>">
+                            <i class="fas <%= c.isActive ? 'fa-ban' : 'fa-check' %>"></i>
+                            <%= c.isActive ? 'Deactivate' : 'Activate' %>
+                        </button>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add Category Modal -->
+<div class="modal fade" id="addModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg">
+      <form action="/admin/categories" method="POST">
+          <div class="modal-header py-3 px-4">
+            <h5 class="modal-title fw-bold">New Category</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body px-4 py-3">
+            <div class="mb-3">
+                <label class="form-label" style="font-size:0.8rem;font-weight:600">Category Name</label>
+                <input type="text" name="name" class="form-control" placeholder="e.g. Plumbing" required autofocus>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" style="font-size:0.8rem;font-weight:600">Icon URL <span class="text-muted fw-normal">(optional)</span></label>
+                <input type="text" name="iconUrl" class="form-control" placeholder="https://...">
+            </div>
+          </div>
+          <div class="modal-footer px-4 py-3">
+            <button type="submit" class="btn btn-primary w-100" style="border-radius:8px">Save Category</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Rename Category Modal -->
+<div class="modal fade" id="renameModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg">
+      <form id="renameForm">
+          <div class="modal-header py-3 px-4">
+            <h5 class="modal-title fw-bold">Rename Category</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body px-4 py-3">
+            <div class="mb-3">
+                <label class="form-label" style="font-size:0.8rem;font-weight:600">Category Name</label>
+                <input type="text" id="renameInput" name="name" class="form-control" required autofocus>
+                <input type="hidden" id="renameCategoryId">
+            </div>
+          </div>
+          <div class="modal-footer px-4 py-3">
+            <button type="submit" class="btn btn-primary w-100" style="border-radius:8px" id="renameSubmitBtn">Update Name</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

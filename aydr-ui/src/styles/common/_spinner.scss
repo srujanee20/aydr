@@ -1,0 +1,42 @@
+@use '../variables' as *;
+
+.spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
+
+  &--sm { padding: 1rem; }
+  &--lg { padding: 5rem; }
+  &--fullpage {
+    min-height: calc(100vh - $navbar-height);
+  }
+
+  &__circle {
+    border: 3px solid $color-border;
+    border-top-color: $color-primary;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  &--sm &__circle { width: 20px; height: 20px; }
+  &--md &__circle { width: 36px; height: 36px; }
+  &--lg &__circle { width: 48px; height: 48px; }
+
+  // Default
+  &__circle {
+    width: 36px;
+    height: 36px;
+  }
+
+  &__text {
+    color: $color-text-muted;
+    font-size: 0.9rem;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

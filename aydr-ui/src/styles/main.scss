@@ -1,0 +1,53 @@
+@use 'variables' as *;
+
+// Common components
+@use 'common/spinner';
+@use 'common/modal';
+@use 'common/service-card';
+@use 'common/booking-card';
+@use 'common/progress-bar';
+
+// Layouts
+@use 'layouts/navbar';
+
+// Pages
+@use 'pages/home';
+@use 'pages/auth/auth';
+@use 'pages/customer/dashboard' as customer-dash;
+@use 'pages/customer/provider-detail';
+@use 'pages/customer/profile';
+@use 'pages/provider/dashboard' as provider-dash;
+@use 'pages/provider/bookings';
+@use 'pages/provider/settings';
+
+// ─── Global Reset & Base ───
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: $color-background-light;
+  color: $color-text-main;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}

@@ -1,0 +1,80 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+@use 'sass:color';
+
+.navbar {
+  background-color: $color-white;
+  box-shadow: $shadow-sm;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: $navbar-height;
+
+  &__container {
+    max-width: $max-width;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 100%;
+    @include flex-between;
+  }
+
+  &__logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: $color-background-dark;
+    letter-spacing: -0.05em;
+
+    span {
+      color: $color-primary;
+    }
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: $color-text-main;
+    padding: 0.4rem 0.6rem;
+    border-radius: $border-radius;
+    transition: all $transition-base;
+
+    &:hover {
+      color: $color-primary;
+      background-color: rgba($color-primary, 0.05);
+    }
+  }
+
+  &__avatar {
+    @include avatar(32px);
+  }
+
+  &__username {
+    font-weight: 600;
+  }
+
+  &__btn {
+    @include btn-primary;
+    padding: 0.45rem 1.1rem;
+    font-size: 0.85rem;
+
+    &--logout {
+      @include btn-ghost;
+      padding: 0.45rem 1.1rem;
+      font-size: 0.85rem;
+      color: $color-danger;
+
+      &:hover:not(:disabled) {
+        background-color: rgba($color-danger, 0.08);
+        color: $color-danger;
+      }
+    }
+  }
+}

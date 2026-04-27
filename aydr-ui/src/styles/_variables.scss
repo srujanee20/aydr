@@ -1,0 +1,49 @@
+// ─── Colors ───
+$color-primary: #2563eb;
+$color-primary-light: #3b82f6;
+$color-primary-dark: #1d4ed8;
+$color-accent: #6366f1;
+
+$color-background-dark: #0f172a;
+$color-background-light: #f8fafc;
+$color-surface: #f1f5f9;
+$color-white: #ffffff;
+
+$color-text-main: #334155;
+$color-text-muted: #64748b;
+$color-text-light: #94a3b8;
+
+$color-success: #10b981;
+$color-warning: #f59e0b;
+$color-danger: #ef4444;
+$color-info: #06b6d4;
+
+$color-border: #e2e8f0;
+$color-border-light: #f1f5f9;
+
+// ─── Status Colors ───
+$status-incomplete: #94a3b8;
+$status-pending: #f59e0b;
+$status-approved: #10b981;
+$status-rejected: #ef4444;
+
+// ─── Borders & Spacing ───
+$border-radius: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-full: 9999px;
+
+// ─── Shadows ───
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+// ─── Layout ───
+$max-width: 1200px;
+$navbar-height: 64px;
+
+// ─── Transitions ───
+$transition-fast: 0.15s ease;
+$transition-base: 0.2s ease;
+$transition-slow: 0.3s ease;

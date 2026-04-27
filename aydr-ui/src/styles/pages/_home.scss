@@ -1,0 +1,120 @@
+@use "sass:color";
+@use "../variables" as *;
+@use '../mixins' as *;
+
+.home-page {
+  min-height: calc(100vh - $navbar-height);
+  background-color: $color-background-light;
+  color: $color-text-main;
+
+  &__hero {
+    background: linear-gradient(135deg, $color-background-dark, color.adjust($color-background-dark, $lightness: 8%));
+    color: $color-white;
+    padding: 6rem 2rem;
+    @include flex-center;
+    text-align: center;
+  }
+
+  &__hero-content {
+    max-width: 800px;
+    width: 100%;
+  }
+
+  &__title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  &__subtitle {
+    font-size: 1.25rem;
+    color: $color-text-light;
+    margin-bottom: 2.5rem;
+  }
+
+  &__search-bar {
+    display: flex;
+    background-color: $color-white;
+    padding: 0.5rem;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-xl;
+
+    input {
+      flex-grow: 1;
+      border: none;
+      padding: 1rem;
+      font-size: 1.1rem;
+      background-color: transparent;
+      color: $color-background-dark;
+      outline: none;
+    }
+
+    button[type="submit"] {
+      @include btn-primary;
+      padding: 0 2rem;
+      font-size: 1rem;
+      border-radius: $border-radius;
+    }
+
+    .home-page__clear-btn {
+      @include flex-center;
+      background-color: rgba($color-danger, 0.1);
+      color: $color-danger;
+      border: none;
+      padding: 0 1.25rem;
+      margin-left: 0.5rem;
+      font-size: 1.2rem;
+      border-radius: $border-radius;
+      cursor: pointer;
+      transition: background-color $transition-fast;
+
+      &:hover {
+        background-color: rgba($color-danger, 0.2);
+      }
+    }
+  }
+
+  &__cta-btn {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.8rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: $border-radius-lg;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: $color-white;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: all $transition-fast;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+  }
+
+  &__discovery {
+    @include page-container;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    @include section-header;
+  }
+
+  &__map-wrapper {
+    height: 500px;
+    width: 100%;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    box-shadow: $shadow-lg;
+
+    .leaflet-container {
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+}

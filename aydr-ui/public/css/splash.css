@@ -1,0 +1,71 @@
+/* ─── Splash Screen ─── */
+/* Matches the app's design system: Inter font, $color-primary (#2563eb),
+   light background, clean borders. Shown briefly before React mounts. */
+
+.aydr-splash {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    background: #f8fafc; /* $color-background-light */
+    z-index: 9999;
+}
+
+/* Logo block */
+.aydr-splash__logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    animation: aydr-fade-in 0.5s ease forwards;
+}
+
+.aydr-splash__wordmark {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #2563eb; /* $color-primary */
+}
+
+.aydr-splash__tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #94a3b8; /* $color-text-light */
+}
+
+/* Spinner — matches .spinner__circle from _spinner.scss */
+.aydr-splash__spinner {
+    animation: aydr-fade-in 0.5s 0.15s ease both;
+}
+
+.aydr-splash__ring {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 3px solid #e2e8f0; /* $color-border */
+    border-top-color: #2563eb; /* $color-primary */
+    animation: aydr-spin 0.7s linear infinite;
+}
+
+/* Keyframes */
+@keyframes aydr-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes aydr-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
