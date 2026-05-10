@@ -4,10 +4,9 @@ const User = require('../models/User');
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET || 'your_temporary_jwt_secret', // Should be moved to .env
-    // Best practice: uncomment these when you move to production to strictly enforce token origin
-    // issuer: process.env.JWT_ISSUER || 'aydr-api',
-    // audience: process.env.JWT_AUDIENCE || 'aydr-client',
+    secretOrKey: process.env.JWT_SECRET,
+    issuer: process.env.JWT_ISSUER,
+    audience: process.env.JWT_AUDIENCE,
 };
 
 passport.use(new JwtStrategy(options, async (jwtPayload, done) => {

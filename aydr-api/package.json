@@ -16,10 +16,8 @@
     "url": "git+https://github.com/srujanee20/aydr.git"
   },
   "scripts": {
-    "dev": "node index",
-    "dev:lcl": "node index --env=local",
-    "dev:watch": "nodemon index",
-    "dev:lcl:watch": "nodemon index --env=local",
+    "start": "node index --env=production",
+    "dev": "nodemon index --env=local",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },
@@ -27,6 +25,7 @@
     "@imagekit/nodejs": "^7.5.0",
     "bcryptjs": "^3.0.3",
     "compression": "^1.8.1",
+    "connect-mongo": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "ejs": "^5.0.2",

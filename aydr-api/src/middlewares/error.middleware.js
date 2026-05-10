@@ -23,7 +23,7 @@ const errorHandler = (err, req, res, next) => {
 
     // 4. Fallback to standard 400 Bad Request if it's a known service error
     // or 500 if it's an unhandled crash.
-    const statusCode = err.statusCode || (err.message ? 400 : 500);
+    const statusCode = err.statusCode || 500;
     res.status(statusCode).json({
         message: err.message || 'Internal Server Error'
     });
