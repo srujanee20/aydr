@@ -21,7 +21,17 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 
 app.use(helmet({ contentSecurityPolicy: false })); // Secure HTTP headers, CSP disabled to allow CDNs
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true })); // Restrict to frontend domain
+const allowedOrigins = [
+    process.env.FRONTEND_URL || 'https://aydr-ui.vercel.app', 
+    'http://localhost:3000', 
+    'http://localhost:3030'
+];
+app.use(cors({ 
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+}));
 // Prevent NoSQL injection (sanitize body & params only — req.query is read-only in Express 5)
 app.use((req, res, next) => {
     if (req.body) req.body = mongoSanitize.sanitize(req.body);
