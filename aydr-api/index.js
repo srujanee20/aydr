@@ -24,6 +24,9 @@ const PORT = process.env.PORT || 8000;
 
 const app = express();
 
+// Trust Vercel's reverse proxy so rate-limiter gets the real user IP
+app.set('trust proxy', 1);
+
 app.use(helmet({ contentSecurityPolicy: false })); // Secure HTTP headers, CSP disabled to allow CDNs
 const allowedOrigins = [
     process.env.FRONTEND_URL || 'https://aydr-ui.vercel.app', 
