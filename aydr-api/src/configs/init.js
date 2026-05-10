@@ -8,7 +8,7 @@ const options = {
     }
 };
 
-const { values } = parseArgs({ options });
+const { values } = parseArgs({ options, strict: false });
 const env = values.env;
 
 dotenv.config({ path: '.env' });

@@ -16,9 +16,11 @@ const mvcRouter = require("./src/routers/mvc.router");
 const passport = require("./src/configs/passport");
 const connectMongo = require("connect-mongo");
 
-const PORT = process.env.PORT || 8000;
 
-const MongoStore = connectMongo.default;
+
+const MongoStore = connectMongo.default || connectMongo;
+
+const PORT = process.env.PORT || 8000;
 
 const app = express();
 
